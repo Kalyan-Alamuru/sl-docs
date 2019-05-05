@@ -1,0 +1,25 @@
+1. adduser ansible
+2. usermod -aG sudo ansible
+3. Edit the following line using 'visudo'
+%sudo   ALL=(ALL:ALL) NOPASSWD:ALL
+%admin   ALL=(ALL:ALL) NOPASSWD:ALL
+================================
+Only on Nodes:
+edit the following line in /etc/ssh/sshd_config
+PasswordAuthentication no
+change it to:
+PasswordAuthentication yes
+## restart ssh:
+systemctl restart sshd
+================================
+Only on Master:
+## PasswordLess Authentication
+On Master:
+  ssh-keygen -t rsa
+  ssh ansible@159.65.157.154 mkdir -p .ssh
+  cat .ssh/id_rsa.pub | ssh ansible@159.65.157.154 'cat >> .ssh/authorized_keys'
+  
+## Installation
+sudo apt-add-repository ppa:ansible/ansible
+sudo apt-get update
+sudo apt-get install ansible
