@@ -1,0 +1,74 @@
+docker container ls
+docker run hello-world
+docker images
+docker container ls -a
+docker container stop <container id>
+docker container rm <container name>
+docker container run --publish 3306:3306 --detach --name mysqldb -e MYSQL_RANDOM_ROOT_PASSWORD=yes mysql
+docker container logs
+docker container run -p <port number> -d --name <
+docker container top <container name>
+docker container inspect <container name>
+docker container stats --help
+docker container stats
+docker container run -it
+docker container exec -it
+docker container run -it --name proxy nginx bash
+docker container run -it --name ubuntu ubuntu
+apt-get update
+apt-get install -y curl
+docker container start -ai ubuntu
+docker container exec -it mysql bash
+docker image ls
+docker pull alpine
+docker container run -it alpine bash
+docker container run -p
+docker container port <contianre >
+https://docs.docker.com/samples/#library-references
+docker container run -p 80:80 --name webhost -d nginx
+docker container inspect --format '{{ .NetworkSettings.IPAddress }}' webhost
+docker netwok ls
+docker network inspect
+docker network create --driver
+docker network connect
+docker network disconnect
+docker network inspect bridge
+docker network create my_app_net
+docker container run -d --name new_nginx --network my_app_net nginx
+docker netwok inspect my_app_net
+docker container run -d --name my_nginx --network my_app_net nginx
+docker network inspect d308cd84ba59
+docker container run --rm -it centos:7 bash
+yum update curl
+docker network create dude
+docker container run -d --network dude --net-alias search elasticsearch2
+docker container run -d --network dude --net-alias search elasticsearch2
+docker container run --rm --net dude alpine nslookup search
+docker pull nginx
+docker pull nginx:1.13.6
+docker history nginx:latest
+docker image inspect nginx
+https://hub.docker.com/_/nginx/
+docker image tag bretfisher/nginx bretfisher/nginx:testing
+docker image build -t customnginx .
+docker image push puneetgaurrr/nginx-with-html
+docker volume ls
+docker container run -d --name mysql2 -e MYSQL_ALLOW_EMPTY_PASSWORD=True mysql
+docker container run -d --name mysql3 -e MYSQL_ALLOW_EMPTY_PASSWORD=True -v mysql-db:/var/lib/mysql mysql
+docker volume inspect mysql-db
+docker volume create --help
+docker container run -d --name nginx -p 80:80 -v $(pwd):/usr/share/nginx/html nginx
+docker container run -d --name nginx2 -p 8080:80 nginx
+docker container run -d --name psql -v psql:/var/lib/postgresql/data postgres:9.6.1
+docker container logs b14cc5c58536
+docker-compose up
+docker-compose up -d
+docker-compose ps
+docker-compose down
+docker-compose down -v
+docker swarm init
+docker info
+docker node ls
+docker service ps zealous_nobel
+docker service update m826twf06897 --replicas 3
+docker service update --help
