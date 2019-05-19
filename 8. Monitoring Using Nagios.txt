@@ -1,0 +1,148 @@
+##############################
+## Nagios
+##############################
+
+Agenda for the day:
+  Monitoring
+  Project
+  Evaluation Test
+
+Keywords:
+  Nagios
+  ELK Stack
+  SiteScope
+  Logrythm
+  Graphana
+  Splunk
+  CloudWatch => Event Monitoring
+  CloudTrail => API logging
+  Prometheus
+
+APM => Application Performance Management
+    New Relic
+    App Dynamics
+
+
+Actionable Insight
+
+============================
+Nagios Flavors:
+============================
+
+Nagios Core => OpenSource (Free version)
+Nagios XI   => Enterprise (Paid Version)
+
+
+sudo htpasswd -c /usr/local/nagios/etc/htpasswd.users nagiosadmin
+
+
+
+cfg_file=/usr/local/nagios/etc/objects/dbnodes.cfg
+cfg_dir=/usr/local/nagios/etc/servers
+
+Installation Script:
+
+Nagios XI:
+curl https://assets.nagios.com/downloads/nagiosxi/install.sh | sh
+
+============================
+Nagios Object Definitions
+============================
+
+define host {
+  use                   generic-host
+  host_name             tz-master
+  hostgroup_name        mywebservers
+  alias                 k8s Master
+  address               159.89.173.203
+  max_check_attempts    5
+  check_period          24x7
+  notification_interval 15
+  notification_period   24x7
+}
+define service {
+  use                   generic-service
+  host_name             tz-master
+  service_description   PING
+  check_command         check_ping!100.0,20%!500.0,40%
+}
+define service {
+  use                   generic-service
+  host_name             tz-master
+  service_description   SSH
+  check_command         check_ssh
+}
+
+
+
+============================
+Refernces:
+============================
+
+Installation:
+https://support.nagios.com/kb/article/nagios-core-installing-nagios-core-from-source-96.html#Ubuntu
+
+Object Definitions:
+https://assets.nagios.com/downloads/nagioscore/docs/nagioscore/3/en/objectdefinitions.html
+
+Nagios XI Quick Start:
+https://assets.nagios.com/downloads/nagiosxi/docs/Installing-Nagios-XI-Manually-on-Linux.pdf
+
+
+
+
+============================
+Project
+============================
+
+WorkFlow:
+- Code base on GitHub
+- Pull it on Jenkins
+- use Docker to build the app (Dockerizing the app)
+- Build it using Jenkins
+- push to DockerHub
+- Deploy as container
+
+
+Prerequisites:
+- ubuntu 16.04
+- Jenkins and Docker to be preinstalled
+- Docker Hub account created
+- copied Jenkinsfile and Dockerfile locally
+- Go to the location where you have Dockerfile copied
+- run the following command:
+    sudo docker build -t ubuntu .
+
+chmod 777 /var/run/docker.sock
+
+- Install Nodejs plugin (using Manage Plugin)
+- Configure node plugin in "Global Tool configuration"
+
+
+
+Docker Installation
+
+curl -fsSL https://get.docker.com -o get-docker.sh
+sudo sh get-docker.sh
+sudo usermod -aG docker ${USER}
+
+
+For your Word Document:
+
+history command output
+
+screenshots
+  - Dockerfile
+  - Docker build -t ubuntu .
+  - Jenkinsfile
+  - jenkins job build history
+  - DockerHub
+
+
+
+
+
+
+
+
+.

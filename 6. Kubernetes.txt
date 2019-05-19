@@ -1,0 +1,159 @@
+##########################
+##KubernetesClassNotes
+##########################
+
+Keywords
+
+Overlay (SDN) => NSX
+Borg => Kubernetes (k8s)
+CoE => Container Orchestration Engine
+  Kubernetes
+  Docker Swarm
+  Apache Mesos
+  AWS EKS
+  AWS ECS
+  Azure AKS
+  GKE from Google
+  OpenShift (from RedHat)
+
+Physical Machines => VM => OS => Container Runtime (e.g. Docker) + CoE => Containers => Applications
+
+Analogous softwares
+  VMware vCenter
+  MS SCCM
+
+kubectl - Command line utility to talk to k8s
+
+===========================
+Kubernetes Infrastructure Terminology
+===========================
+
+Node    => A server inside a Kubernetes cluster
+Cluster => A group of managed (by k8s) servers
+
+Master (Manager) - The server which runs k8s and Manages other nodes/servers
+  1. kube-apiserver - API server for management and Orchestration
+  2. etcd - Distributed key-value store for configuration and other settings of k8s cluster
+  3. Kube-Controller-Manager - Controls k8s services
+  4. Kube-Scheduler - Schedules containers on the Cluster
+
+Worker Nodes - Servers manages by Master used for running the actual workloads
+  1. kubelet    - k8s agent running on all worker nodes
+  2. Kube-proxy - responsible for all communication to and from the pods
+  3. Container Runtime - docker/rkt
+
+
+CRI => Container Runtime Interfaces
+  - Docker
+  - rkt
+  - containerd
+
+CNI => Container Network Interface
+  - Flannel
+  - Weave
+  - Calico
+
+CSI => Container Storage Interfaces
+  - cinder
+  - CephFS
+  - GCE persistent disk
+
+===========================
+Kubernetes Primitives/Objects
+===========================
+  Pod
+  ReplicaSets
+  Deployments
+  Services
+
+
+YAML Files
+
+A => API version
+K => Kind ## this defines the type of object/primitive
+M => Metada
+S => Specs
+
+
+Pods => ReplicaSets => Deployments
+
+***************
+db-pod.yml
+***************
+apiVersion: "v1"
+kind: Pod
+metadata:
+  name: redis
+  labels:
+    name: redis
+    app: demo
+spec:
+  containers:
+    - name: redis
+      image: redis:latest
+      ports:
+        - containerPort: 6379
+          protocol: TCP
+
+***************
+web-rc.yml
+***************
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: web
+  labels:
+    name: web
+    app: demo
+spec:
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        name: web
+    spec:
+      containers:
+        - name: web
+          image: xiaopeng163/docker-flask-demo:1.0
+          ports:
+            - containerPort: 5000
+              name: http
+              protocol: TCP
+
+***************
+nginx-Deployment.yml
+***************
+## Deployment example with rolling updates
+apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
+kind: Deployment
+metadata:
+  name: nginx-deployment
+spec:
+  selector:
+    matchLabels:
+     app: nginx
+  replicas: 2  # tell deployment to run 2 pods matching this template
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:1.7.9
+        ports:
+        - containerPort: 80
+
+===========================
+References
+===========================
+
+https://x-team.com/blog/introduction-kubernetes-architecture/
+https://www.cncf.io/
+https://kubernetes.io/docs/home/
+https://dcos.io/
+https://www.edureka.co/blog/kubernetes-architecture/
+https://thenewstack.io/kubernetes-an-overview/
+https://www.katacoda.com/courses/kubernetes/playground
+https://kubernetes.io/docs/tasks/tools/install-minikube/
+https://chocolatey.org/ (for Windows users)
